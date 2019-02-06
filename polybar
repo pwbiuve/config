@@ -1,0 +1,182 @@
+;----------;
+;  COLORS  ;
+;----------;
+
+[colors]
+blackblue = #000033
+background = #ffffff
+background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+coolblue = #00A1E6
+
+;----------;
+;   bar    ;
+;----------;
+
+
+[bar/top]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 30
+;offset-x = 1%
+;offset-y = 1%
+fixed-center = true
+background = #474747
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = #000000
+
+border-size = 0
+border-color = #000000
+
+padding = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fontawesome:pixelsize=14;0
+font-1 = fontawesome:fontformat=truetype:size=13:antialias=false;0
+font-2 = Arial:pixelsize=14;0
+
+modules-left = ewmh firefox
+modules-center = date time
+modules-right = pulseaudio nmtui wlan battery update poweroff
+
+tray-position = none
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+;----------;
+; modules  ;
+;----------;
+
+[module/firefox]
+type = custom/script
+exec = echo "  "
+click-left = firefox &
+
+[module/ewmh]
+type = internal/xworkspaces
+pin-workspaces = true
+enable-click = true
+enable-scroll = false
+icon-0 = selected;
+icon-1 = not;
+label-active = "  "
+label-empty = "  "
+label-empty-foreground = #55
+
+[module/update]
+type = custom/script
+exec = cat ~/.Scripts/upgradecheck
+interval = 1
+click-left = gnome-terminal -- ~/.Scripts/update.sh &
+
+[module/wlan]
+type = internal/network
+interface = wlp4s0
+interval = 3.0
+
+label-connected = wifi: %essid%
+
+format-disconnected = 
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/poweroff]
+type = custom/menu
+
+menu-0-0 =   
+menu-0-0-exec = shutdown -h now
+menu-0-1 =    
+menu-0-1-exec = poweroff --reboot
+
+label-open =   
+label-close = x
+label-separator = " | "
+
+[module/date]
+type = custom/script
+exec = echo $(date '+%d %b %Y')
+interval = 1
+click-left = gsimplecal &
+
+[module/time]
+type = custom/script
+exec = echo $(date +%H:%M:%S)
+interval = 1
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = Volume: %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = 
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 0
+bar-volume-fill = ─
+bar-volume-fill-font = 3
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = BAT1
+adapter = ACAD
+poll-interval = 5
+format-charging =  <label-charging>
+format-discharging = <animation-discharging> <label-discharging>
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-framerate = 500
+
+[module/nmtui]
+type = custom/script
+exec = echo "  "
+click-left = gnome-terminal -- nmtui &
+
+;-------------;
+;  settings   ;
+;-------------;
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 0
+margin-bottom = 4
+
+; vim:ft=dosini
