@@ -76,8 +76,9 @@ label-empty-foreground = #55
 
 [module/update]
 type = custom/script
-exec = cat ~/.Scripts/upgradecheck
-interval = 1
+exec = ~/.Scripts/updatecheck.sh
+interval = 1200
+tail = true
 click-left = gnome-terminal -- ~/.Scripts/update.sh &
 
 [module/wlan]
