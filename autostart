@@ -1,4 +1,3 @@
-~/.Scripts/showupdates.sh &
 nitrogen --restore &
 compton -b &
 polybar top &
