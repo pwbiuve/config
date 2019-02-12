@@ -3,16 +3,31 @@
 ;----------;
 
 [colors]
-blackblue = #000033
-background = #ffffff
-background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
-coolblue = #00A1E6
+gray = #928374
+gray2 = #a89984
+red = #cc241d
+red_alt = #fb4934
+orange = #d65d0e
+orange0 = #fe8019
+yellow = #d79921
+yellow0 = #fabd2f
+green = #98971a
+green0 = #b8bb26
+blue = #458588
+blue0 = #83a598
+purple = #b16286
+purple0 = #d3869b
+aqua = #689d6a
+aqua0 = #8ec07c
+clear = #00ffffff
+background = #00ffffff
+black = #000000
+magenta = #ff00ff
+
+foreground = #ffffff
+foreground-alt = #222222
+primary = #EEEFFD
+secondary = #EEEFFD
 
 ;----------;
 ;   bar    ;
@@ -24,10 +39,10 @@ coolblue = #00A1E6
 width = 100%
 height = 30
 ;offset-x = 1%
-;offset-y = 1%
+;offset-y = 0.5%
 fixed-center = true
-background = #474747
-foreground = ${colors.foreground}
+background = #192933
+foreground = #D3D7CF
 
 line-size = 0
 line-color = #000000
@@ -35,33 +50,89 @@ line-color = #000000
 border-size = 0
 border-color = #000000
 
-padding = 2
+padding = 0
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 0
+module-margin-right = 0
 
-font-0 = fontawesome:pixelsize=14;0
-font-1 = fontawesome:fontformat=truetype:size=13:antialias=false;0
-font-2 = Arial:pixelsize=14;0
+font-0 = FontAwesome:size=14;2
+font-1 = Open Sans Semibold:style=Semibold:size=14:antialias=true;2
+font-2 = FontAwesome:size=45;9
 
-modules-left = ewmh firefox
-modules-center = date time
-modules-right = pulseaudio nmtui wlan battery update poweroff
+modules-left = launcher ewmh firefox
+modules-center = date time 
+modules-right = left1 pulseaudio left2 nmtui left3 network left4 battery left5 showupdates left6 poweroff
 
 tray-position = none
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+;-----------------;
+;   DECORATIONS   ;
+;-----------------;
 
-;----------;
-; modules  ;
-;----------;
+[module/left1]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #aac4d5
+content-background = #192933
+
+[module/left2]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #87adc4
+content-background = #aac4d5
+
+[module/left3]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #6595b3
+content-background = #87adc4
+
+[module/left4]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #4c7c9a
+content-background = #6595b3
+
+[module/left5]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #3b6078
+content-background = #4c7c9a
+
+[module/left6]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #223744
+content-background = #3b6078
+
+
+;-----------------;
+;  M O D U L E S  ;
+;-----------------;
+
+[module/launcher]
+type = custom/script
+exec = echo 
+click-left = rofi -show drun &
+format-background = #192933
+format-foreground = #D3D7CF
+format-padding = 2
 
 [module/firefox]
 type = custom/script
-exec = echo "  "
+exec = echo 
 click-left = firefox &
+format-foreground = #ff9933
+format-padding = 2
 
 [module/ewmh]
 type = internal/xworkspaces
@@ -70,38 +141,45 @@ enable-click = true
 enable-scroll = false
 icon-0 = selected;
 icon-1 = not;
-label-active = "  "
-label-empty = "  "
-label-empty-foreground = #55
+label-active = " "
+label-active-foreground = #D3D7CF
+label-empty = " "
+label-empty-foreground = #D3D7CF
+format-padding = 1
 
-[module/update]
+[module/showupdates]
 type = custom/script
-exec = ~/.Scripts/updatecheck.sh
-interval = 1200
+exec = ~/.Scripts/showupdates.sh
+interval = 2
 tail = true
 click-left = gnome-terminal -- ~/.Scripts/update.sh &
+format-background = #3b6078
+format-foreground = #D3D7CF
+format-padding = 2
 
-[module/wlan]
+[module/network]
 type = internal/network
 interface = wlp4s0
-interval = 3.0
-
-label-connected = wifi: %essid%
-
-format-disconnected = 
-;format-disconnected = <label-disconnected>
+interval = 2
+label-connected = "%essid%"
+format-padding = 1
+label-connected-background = #6595b3
+label-connected-foreground = #192933
+format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = Disconnected
+label-disconnected-foreground = #192933
+label-disconnected-background = #6595b3
 
 [module/poweroff]
 type = custom/menu
-
-menu-0-0 =   
+format-background = #223744
+format-foreground = #D3D7CF
+format-padding = 2
+menu-0-0 =  "   "
 menu-0-0-exec = shutdown -h now
 menu-0-1 =    
 menu-0-1-exec = poweroff --reboot
-
 label-open =   
 label-close = x
 label-separator = " | "
@@ -109,48 +187,51 @@ label-separator = " | "
 [module/date]
 type = custom/script
 exec = echo $(date '+%d %b %Y')
-interval = 1
+interval = 12
 click-left = gsimplecal &
 
 [module/time]
 type = custom/script
 exec = echo $(date +%H:%M:%S)
 interval = 1
+format-padding = 2
 
 [module/pulseaudio]
 type = internal/pulseaudio
-
-format-volume = <label-volume> <bar-volume>
-label-volume = Volume: %percentage%%
-label-volume-foreground = ${root.foreground}
-
-label-muted = 
-label-muted-foreground = #666
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 0
-bar-volume-fill = ─
-bar-volume-fill-font = 3
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+format-volume = <label-volume>
+label-volume =  %percentage%%
+label-volume-foreground = #192933
+label-volume-background = #aac4d5
+label-muted =  Mute
+label-muted-background = #aac4d5
+label-muted-foreground = #192933
+label-volume-padding = 0
+label-muted-padding = 0
 
 [module/battery]
 type = internal/battery
 full-at = 99
 battery = BAT1
 adapter = ACAD
-poll-interval = 5
-format-charging =  <label-charging>
+format-padding = 2
+poll-interval = 3
+format-charging = <label-charging>
+label-charging = "  %percentage%% "
+label-full = "  %percentage%% "
+format-discharging-background = #4c7c9a
+format-discharging-foreground = #192933
+format-charging-background = #4c7c9a
+format-charging-foreground = #192933
+format-background = #4c7c9a
+format-foreground = #192933
+label-charging-background = #4c7c9a
+label-charging-foreground = #192933
+label-discharging-background = #4c7c9a
+label-discharging-foreground = #192933
+label-foreground = #4c7c9a
+label-background = #192933
+label-full-background = #4c7c9a
+label-full-foreground = #192933
 format-discharging = <animation-discharging> <label-discharging>
 animation-discharging-0 = 
 animation-discharging-1 = 
@@ -161,8 +242,11 @@ animation-discharging-framerate = 500
 
 [module/nmtui]
 type = custom/script
-exec = echo "  "
+exec = echo ""
 click-left = gnome-terminal -- nmtui &
+format-background = #87adc4
+format-foreground = #192933
+format-padding = 1
 
 ;-------------;
 ;  settings   ;
