@@ -61,7 +61,7 @@ font-2 = FontAwesome:size=45;9
 
 modules-left = launcher ewmh firefox
 modules-center = date time 
-modules-right = left1 pulseaudio left2 nmtui left3 network left4 battery left5 showupdates left6 poweroff
+modules-right = left1 pulseaudio left2 nmtui left7 windscribe left3 network left4 battery left5 showupdates left6 poweroff
 
 tray-position = none
 
@@ -91,7 +91,7 @@ type = custom/text
 content = ""
 content-font = 3
 content-foreground = #6595b3
-content-background = #87adc4
+content-background = #76a1bc
 
 [module/left4]
 type = custom/text
@@ -113,6 +113,13 @@ content = ""
 content-font = 3
 content-foreground = #223744
 content-background = #3b6078
+
+[module/left7]
+type = custom/text
+content = ""
+content-font = 3
+content-foreground = #76a1bc
+content-background = #87adc4
 
 
 ;-----------------;
@@ -138,7 +145,7 @@ format-padding = 2
 type = internal/xworkspaces
 pin-workspaces = true
 enable-click = true
-enable-scroll = false
+enable-scroll = true
 icon-0 = selected;
 icon-1 = not;
 label-active = " "
@@ -151,7 +158,6 @@ format-padding = 1
 type = custom/script
 exec = ~/.Scripts/showupdates.sh
 interval = 2
-tail = true
 click-left = gnome-terminal -- ~/.Scripts/update.sh &
 format-background = #3b6078
 format-foreground = #D3D7CF
@@ -248,6 +254,15 @@ format-background = #87adc4
 format-foreground = #192933
 format-padding = 1
 
+[module/windscribe]
+type = custom/script
+exec = cat ~/.Scripts/windanswer
+click-left = gnome-terminal -- windscribe connect US-C
+format-background = #76a1bc
+format-foreground = #192933
+interval = 2
+format-padding = 1
+
 ;-------------;
 ;  settings   ;
 ;-------------;
@@ -262,6 +277,6 @@ screenchange-reload = true
 
 [global/wm]
 margin-top = 0
-margin-bottom = 4
+margin-bottom = 3
 
 ; vim:ft=dosini
