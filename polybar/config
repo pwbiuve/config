@@ -33,22 +33,20 @@ secondary = #EEEFFD
 ;   bar    ;
 ;----------;
 
-
 [bar/top]
 ;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
+width = 99%
 height = 30
-;offset-x = 1%
-;offset-y = 0.5%
+offset-x = 0.5%
+offset-y = 0.75%
 fixed-center = true
-background = #192933
-foreground = #D3D7CF
-
+background = #330033
+foreground = #f2e5f2
 line-size = 0
 line-color = #000000
 
-border-size = 0
-border-color = #000000
+border-size = 1
+border-color = #f2e5f2
 
 padding = 0
 
@@ -59,9 +57,9 @@ font-0 = FontAwesome:size=14;2
 font-1 = Open Sans Semibold:style=Semibold:size=14:antialias=true;2
 font-2 = FontAwesome:size=45;9
 
-modules-left = launcher ewmh firefox
-modules-center = date time 
-modules-right = left1 pulseaudio left2 nmtui left7 windscribe left3 network left4 battery left5 showupdates left6 poweroff
+modules-left = launcher files firefox
+modules-center = date time
+modules-right = left1 nvidia left2 pulseaudio left3 windscribe left4 nmtui network left5 battery left6 showupdates left7 poweroff
 
 tray-position = none
 
@@ -76,50 +74,50 @@ cursor-scroll = ns-resize
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #aac4d5
-content-background = #192933
+content-foreground = #400040
+;content-background = #192933
 
 [module/left2]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #87adc4
-content-background = #aac4d5
+content-foreground = #590059
+content-background = #400040
 
 [module/left3]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #6595b3
-content-background = #76a1bc
+content-foreground = #730073
+content-background = #590059
 
 [module/left4]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #4c7c9a
-content-background = #6595b3
+content-foreground = #8c198c
+content-background = #730073
 
 [module/left5]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #3b6078
-content-background = #4c7c9a
+content-foreground = #a64ca6
+content-background = #8c198c
 
 [module/left6]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #223744
-content-background = #3b6078
+content-foreground = #bf7fbf
+content-background = #a64ca6
 
 [module/left7]
 type = custom/text
 content = ""
 content-font = 3
-content-foreground = #76a1bc
-content-background = #87adc4
+content-foreground = #d8b2d8
+content-background = #bf7fbf
 
 
 ;-----------------;
@@ -128,64 +126,65 @@ content-background = #87adc4
 
 [module/launcher]
 type = custom/script
-exec = echo 
+exec = echo " "
 click-left = rofi -show drun &
-format-background = #192933
-format-foreground = #D3D7CF
+;format-background = #192933
+;format-foreground = #D3D7CF
 format-padding = 2
 
 [module/firefox]
 type = custom/script
 exec = echo 
 click-left = firefox &
-format-foreground = #ff9933
+;format-foreground = #ff9933
 format-padding = 2
 
-[module/ewmh]
-type = internal/xworkspaces
-pin-workspaces = true
-enable-click = true
-enable-scroll = true
-icon-0 = selected;
-icon-1 = not;
-label-active = " "
-label-active-foreground = #D3D7CF
-label-empty = " "
-label-empty-foreground = #D3D7CF
-format-padding = 1
+[module/files]
+type = custom/script
+exec = echo 
+click-left = nemo &
+format-padding = 2
 
 [module/showupdates]
 type = custom/script
-exec = ~/.Scripts/showupdates.sh
+exec = echo 
 interval = 2
 click-left = gnome-terminal -- ~/.Scripts/update.sh &
-format-background = #3b6078
-format-foreground = #D3D7CF
+format-background = #bf7fbf
+format-foreground = #330033
 format-padding = 2
 
 [module/network]
 type = internal/network
 interface = wlp4s0
 interval = 2
-label-connected = " %essid%"
+label-connected = "%essid%"
 format-padding = 1
-label-connected-background = #6595b3
-label-connected-foreground = #192933
+label-connected-background = #8c198c
+;label-connected-foreground = #192933
 format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = Disconnected
-label-disconnected-foreground = #192933
-label-disconnected-background = #6595b3
+label-disconnected = No Wifi
+;label-disconnected-foreground = #192933
+label-disconnected-background = #8c198c
+
+[module/nmtui]
+type = custom/script
+exec = echo ""
+click-left = gnome-terminal -- nmtui &
+format-background = #8c198c
+;format-foreground = #192933
+format-padding = 1
 
 [module/poweroff]
 type = custom/menu
-format-background = #223744
-format-foreground = #D3D7CF
+format-background = #d8b2d8
+format-foreground = #330033
 format-padding = 2
-menu-0-0 =  "   "
-menu-0-0-exec = shutdown -h now
-menu-0-1 =    
-menu-0-1-exec = poweroff --reboot
+menu-0-0 =    
+menu-0-0-exec = poweroff --reboot
+menu-0-1 = "   "
+menu-0-1-exec = shutdown -h now
 label-open =   
 label-close = x
 label-separator = " | "
@@ -206,11 +205,11 @@ format-padding = 2
 type = internal/pulseaudio
 format-volume = <label-volume>
 label-volume =  %percentage%%
-label-volume-foreground = #192933
-label-volume-background = #aac4d5
+;label-volume-foreground = #192933
+label-volume-background = #590059
 label-muted =  Mute
-label-muted-background = #aac4d5
-label-muted-foreground = #192933
+label-muted-background = #590059
+;label-muted-foreground = #192933
 label-volume-padding = 0
 label-muted-padding = 0
 
@@ -224,20 +223,20 @@ poll-interval = 3
 format-charging = <label-charging>
 label-charging = "  %percentage%% "
 label-full = "  %percentage%% "
-format-discharging-background = #4c7c9a
-format-discharging-foreground = #192933
-format-charging-background = #4c7c9a
-format-charging-foreground = #192933
+format-discharging-background = #a64ca6
+format-discharging-foreground = #330033
+format-charging-background = #a64ca6
+format-charging-foreground = #330033
 format-background = #4c7c9a
-format-foreground = #192933
-label-charging-background = #4c7c9a
-label-charging-foreground = #192933
-label-discharging-background = #4c7c9a
-label-discharging-foreground = #192933
-label-foreground = #4c7c9a
-label-background = #192933
-label-full-background = #4c7c9a
-label-full-foreground = #192933
+format-foreground = #330033
+label-charging-background = #a64ca6
+label-charging-foreground = #330033
+label-discharging-background = #a64ca6
+label-discharging-foreground = #330033
+label-foreground = #330033
+label-background = #a64ca6
+label-full-background = #a64ca6
+label-full-foreground = #330033
 format-discharging = <animation-discharging> <label-discharging>
 animation-discharging-0 = 
 animation-discharging-1 = 
@@ -246,22 +245,22 @@ animation-discharging-3 = 
 animation-discharging-4 = 
 animation-discharging-framerate = 500
 
-[module/nmtui]
-type = custom/script
-exec = echo ""
-click-left = gnome-terminal -- nmtui &
-format-background = #87adc4
-format-foreground = #192933
-format-padding = 1
+
 
 [module/windscribe]
 type = custom/script
 exec = cat ~/.Scripts/windanswer
 click-left = gnome-terminal -- windscribe connect US-C
-format-background = #76a1bc
-format-foreground = #192933
+format-background = #730073
+;format-foreground = #192933
 interval = 2
 format-padding = 1
+
+[module/nvidia]
+type = custom/script
+exec = ~/.Scripts/nvidia.sh
+click-left = ~/.Scripts/switchgraphics.sh
+format-background = #400040
 
 ;-------------;
 ;  settings   ;
@@ -277,6 +276,6 @@ screenchange-reload = true
 
 [global/wm]
 margin-top = 0
-margin-bottom = 3
+margin-bottom = 6
 
 ; vim:ft=dosini
