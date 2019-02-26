@@ -1,5 +1,4 @@
 nitrogen --restore &
 compton -b &
-~/.Scripts/updatecheck.sh &
 ~/.Scripts/windscribe.sh &
 polybar top &
